@@ -18,7 +18,7 @@ class Logic {
         const sender = event.sender.id;
 
         if (!this.fbids.has(sender)) {
-            this.fbids.set(sender, uuid.v4());
+            this.fbids.set(sender, uuid());
         }
 
         if (event.message) {
@@ -181,13 +181,13 @@ class Logic {
     //     return messageData;
     // }
 
-    setTypingIndicator(sessionId){
-        for (var [key, value] of this.fbids.entries()) {
-            if(value === sessionId){
-                this.sendMessage(this.prepareSenderAction(key, "typing_on"));
-            }
-        }
-    }
+    // setTypingIndicator(sessionId){
+    //     for (var [key, value] of this.fbids.entries()) {
+    //         if(value === sessionId){
+    //             this.sendMessage(this.prepareSenderAction(key, "typing_on"));
+    //         }
+    //     }
+    // }
 
     //api.ai fulfillment
     // getResponseByAction(event) {

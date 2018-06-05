@@ -2,23 +2,23 @@
 // Reference the packages we require so that we can use them in creating the bot
 const builder = require('botbuilder');
 const express = require('express')
-const bodyParser = require('body-parser');
+const restify = require('restify');
 
 // Config variables set in Heroku
-const MICROSOFT_APP_ID = process.env.MICROSOFT_APP_ID;
-const MICROSOFT_APP_PASSWORD = process.env.process.env.MICROSOFT_APP_PASSWORD;
+const MICROSOFT_APP_ID = "80d11cf5-4542-472b-a092-f170d139beb6" || process.env.MICROSOFT_APP_ID;
+const MICROSOFT_APP_PASSWORD = "piRRBSN395}@gcwhaTC66:~" || process.env.process.env.MICROSOFT_APP_PASSWORD;
 
 // =========================================================
 // Bot Setup
 // =========================================================
+// Listen for any activity on port 5000 of our local server
+
 // Setup Restify Server
-// Listen for any activity on port 3978 of our local server
-const app = express();
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
-const server = app.listen(5000, () => {
-    console.log('Express server listening on port %d in %s mode', server.address().port, app.settings.env);
-});
+var server = restify.createServer();
+server.listen(process.env.port || process.env.PORT || 3978,
+    function () {
+        console.log('%s listening to %s', server.name, server.url);
+    });
 
 
 // Create chat bot
@@ -28,9 +28,9 @@ var connector = new builder.ChatConnector({
 });
 var bot = new builder.UniversalBot(connector);
 
-// If a Post request is made to /api/messages on port 3978 of our local server, then we pass it to the bot connector to handle
+// If a Post request is made to /api/messages on port 5000 of our local server, then we pass it to the bot connector to handle
 /* microsoft bot framework endpoint */
-app.post('/api/messages', connector.listen());
+server.post('/api/messages', connector.listen());
 
 // =========================================================
 // Bots Dialogs

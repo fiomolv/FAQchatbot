@@ -5,11 +5,9 @@ const restify = require('restify');
 const apiairecognizer = require('./apiairecognizer');
 
 // Config variables set in Heroku
-const MICROSOFT_APP_ID = "80d11cf5-4542-472b-a092-f170d139beb6"||process.env.MICROSOFT_APP_ID;
-const MICROSOFT_APP_PASSWORD = "piRRBSN395}@gcwhaTC66:~"|| process.env.MICROSOFT_APP_PASSWORD;
-const DIALOGFLOW_TOKEN = "cfc321ce45724d9e8d52c48c28b70cf6"|| process.env.DIALOGFLOW_TOKEN;
-
-const recognizer = new apiairecognizer(DIALOGFLOW_TOKEN);
+const MICROSOFT_APP_ID = process.env.MICROSOFT_APP_ID;
+const MICROSOFT_APP_PASSWORD = process.env.MICROSOFT_APP_PASSWORD;
+const DIALOGFLOW_TOKEN = process.env.DIALOGFLOW_TOKEN;
 
 
 // =========================================================
@@ -23,7 +21,6 @@ server.listen(process.env.port || process.env.PORT || 3978,
     function () {
         console.log('%s listening to %s', server.name, server.url);
     });
-
 
 // Create chat bot
 var connector = new builder.ChatConnector({
@@ -39,6 +36,7 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 // =========================================================
 // This is called the root dialog. It is the first point of entry for any message the bot receives
+const recognizer = new apiairecognizer(DIALOGFLOW_TOKEN);
 var intents = new builder.IntentDialog({
     recognizers: [recognizer]
 });

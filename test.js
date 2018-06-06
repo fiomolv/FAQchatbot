@@ -14,6 +14,7 @@ var intents = new builder.IntentDialog({
 bot.dialog('/', intents);
 intents.matches('Default Welcome Intent', function(session, args) {
     let messages = args.entities[0].response.messages;
+    console.log(args.entities[0].response);
 
     messages.forEach((message) => {
         session.send(message.speech);

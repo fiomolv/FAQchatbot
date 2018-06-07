@@ -43,38 +43,26 @@ var intents = new builder.IntentDialog({
 
 bot.dialog('/', intents);
 intents.matches('Default Welcome Intent', function(session, args) {
-    console.log(args);
-    let messages = args.entities[0].response.messages;
-
-    messages.forEach((message) => {
-        console.log(message);
-        switch (message.type) {
-            case 0:
-                session.send(message.speech);
-                break;
-            case 2:
-                console.log("quick reply");
-                builder.Prompts.choice(session, message.title, message.replies);
-                session.endDialog();
-                break;
-        }
-    })
+    // console.log(args);
+    messageHandler(session, builder, args);
 });
 
 intents.matches('Default Fallback Intent', function(session, args) {
-    let messages = args.entities[0].response.messages;
+    messageHandler(session, builder, args);
+});
 
+// Handles DialogFlow intents messages
+function messageHandler(session, builder, args) {
+    let messages = args.entities[0].response.messages;
     messages.forEach((message) => {
-        console.log(message);
         switch (message.type) {
-            case 0:
+            case 0: //text
                 session.send(message.speech);
                 break;
-            case 2:
-                console.log("quick reply");
+            case 2: //quick replies
                 builder.Prompts.choice(session, message.title, message.replies);
                 session.endDialog();
                 break;
         }
     })
-});
+}

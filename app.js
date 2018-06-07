@@ -8,7 +8,7 @@ const apiairecognizer = require('./apiairecognizer');
 const MICROSOFT_APP_ID = process.env.MICROSOFT_APP_ID;
 const MICROSOFT_APP_PASSWORD = process.env.MICROSOFT_APP_PASSWORD;
 const DIALOGFLOW_TOKEN = process.env.DIALOGFLOW_TOKEN;
-
+const recognizer = new apiairecognizer(DIALOGFLOW_TOKEN);
 
 // =========================================================
 // Bot Setup
@@ -36,17 +36,45 @@ server.post('/api/messages', connector.listen());
 // Bots Dialogs
 // =========================================================
 // This is called the root dialog. It is the first point of entry for any message the bot receives
-const recognizer = new apiairecognizer(DIALOGFLOW_TOKEN);
+
 var intents = new builder.IntentDialog({
     recognizers: [recognizer]
 });
 
 bot.dialog('/', intents);
-
 intents.matches('Default Welcome Intent', function(session, args) {
+    console.log(args);
     let messages = args.entities[0].response.messages;
 
     messages.forEach((message) => {
-        session.send(message.speech);
+        console.log(message);
+        switch (message.type) {
+            case 0:
+                session.send(message.speech);
+                break;
+            case 2:
+                console.log("quick reply");
+                builder.Prompts.choice(session, message.title, message.replies);
+                session.endDialog();
+                break;
+        }
+    })
+});
+
+intents.matches('Default Fallback Intent', function(session, args) {
+    let messages = args.entities[0].response.messages;
+
+    messages.forEach((message) => {
+        console.log(message);
+        switch (message.type) {
+            case 0:
+                session.send(message.speech);
+                break;
+            case 2:
+                console.log("quick reply");
+                builder.Prompts.choice(session, message.title, message.replies);
+                session.endDialog();
+                break;
+        }
     })
 });

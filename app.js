@@ -60,7 +60,7 @@ function messageHandler(session, builder, args) {
                 session.send(message.speech);
                 break;
             case 2: //quick replies
-                builder.Prompts.choice(session, message.title, message.replies);
+                builder.Prompts.choice(session, message.title, message.replies, { listStyle: 3 });
                 session.endDialog();
                 break;
         }

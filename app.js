@@ -3,12 +3,24 @@
 const builder = require('botbuilder');
 const restify = require('restify');
 const apiairecognizer = require('./apiairecognizer');
+const MongoClient = require('mongodb').MongoClient;
 
 // Config variables set in Heroku
 const MICROSOFT_APP_ID = process.env.MICROSOFT_APP_ID;
 const MICROSOFT_APP_PASSWORD = process.env.MICROSOFT_APP_PASSWORD;
 const DIALOGFLOW_TOKEN = process.env.DIALOGFLOW_TOKEN;
 const recognizer = new apiairecognizer(DIALOGFLOW_TOKEN);
+const DB_PASSWORD = process.env.DB_PASSWORD;
+
+var db;
+
+// Initialize database connection
+MongoClient.connect('mongodb://admin:' + DB_PASSWORD + '@ds042729.mlab.com:42729/botlog', {
+    poolSize: 50
+}, function(err, database) {
+    if (err) throw err;
+    db = database;
+});
 
 // =========================================================
 // Bot Setup
@@ -65,4 +77,18 @@ function messageHandler(session, builder, args) {
                 break;
         }
     })
+}
+
+// log conversation into database
+function logConversation(context, time, input, reason, db) {
+    let newdoc = {
+        context: context,
+        time: time,
+        userinput: input,
+        reason: reason
+    };
+    console.log(newdoc);
+    db.collection("conversation_log").insert(newdoc, {
+        w: 1
+    });
 }

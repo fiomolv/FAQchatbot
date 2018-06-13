@@ -63,6 +63,30 @@ intents.matches('Default Fallback Intent', function(session, args) {
     messageHandler(session, builder, args);
 });
 
+intents.matches('Default Goodbye Intent', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('main-acct openclose', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('main-billing', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('acct_openclose-opening account', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('acct_openclose-opening account - commercial', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('acct_openclose-opening account - residential', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
 // Handles DialogFlow intents messages
 function messageHandler(session, builder, args) {
     let messages = args.entities[0].response.messages;

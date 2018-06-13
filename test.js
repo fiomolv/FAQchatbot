@@ -1,6 +1,6 @@
 var builder = require('botbuilder');
 var apiairecognizer = require('./apiairecognizer');
-const DIALOGFLOW_TOKEN = process.env.DIALOGFLOW_TOKEN;
+const DIALOGFLOW_TOKEN = 'f989016e08864e8aa9940d5f58d36800'|| process.env.DIALOGFLOW_TOKEN;
 
 var connector = new builder.ConsoleConnector().listen();
 
@@ -21,6 +21,30 @@ intents.matches('Default Fallback Intent', function(session, args) {
     messageHandler(session, builder, args);
 });
 
+intents.matches('Default Goodbye Intent', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('main-acct openclose', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('main-billing', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('acct_openclose-opening account', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('acct_openclose-opening account - commercial', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
+intents.matches('acct_openclose-opening account - residential', function(session, args) {
+    messageHandler(session, builder, args);
+});
+
 // Handles DialogFlow intents messages
 function messageHandler(session, builder, args) {
     let messages = args.entities[0].response.messages;
@@ -30,7 +54,7 @@ function messageHandler(session, builder, args) {
                 session.send(message.speech);
                 break;
             case 2: //quick replies
-                builder.Prompts.choice(session, message.title, message.replies, { listStyle: 3 }); // { listStyle: 3 }
+                builder.Prompts.choice(session, message.title, message.replies); // { listStyle: 3 }
                 session.endDialog();
                 break;
         }

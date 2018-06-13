@@ -53,37 +53,21 @@ var intents = new builder.IntentDialog({
     recognizers: [recognizer]
 });
 
+// Add dialog intent name here:
+const intentsList = [
+    'Default Welcome Intent',
+    'Default Fallback Intent',
+    'Default Goodbye Intent',
+    'main-acct openclose',
+    'main-billing',
+    'acct_openclose-opening account',
+    'acct_openclose-opening account - commercial',
+    'acct_openclose-opening account - residential'
+];
+
 bot.dialog('/', intents);
-intents.matches('Default Welcome Intent', function(session, args) {
+intents.matchesAny(intentsList, function(session, args) {
     // console.log(args);
-    messageHandler(session, builder, args);
-});
-
-intents.matches('Default Fallback Intent', function(session, args) {
-    messageHandler(session, builder, args);
-});
-
-intents.matches('Default Goodbye Intent', function(session, args) {
-    messageHandler(session, builder, args);
-});
-
-intents.matches('main-acct openclose', function(session, args) {
-    messageHandler(session, builder, args);
-});
-
-intents.matches('main-billing', function(session, args) {
-    messageHandler(session, builder, args);
-});
-
-intents.matches('acct_openclose-opening account', function(session, args) {
-    messageHandler(session, builder, args);
-});
-
-intents.matches('acct_openclose-opening account - commercial', function(session, args) {
-    messageHandler(session, builder, args);
-});
-
-intents.matches('acct_openclose-opening account - residential', function(session, args) {
     messageHandler(session, builder, args);
 });
 

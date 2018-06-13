@@ -15,12 +15,12 @@ const DB_PASSWORD = process.env.DB_PASSWORD;
 var db;
 
 // Initialize database connection
-MongoClient.connect('mongodb://admin:' + DB_PASSWORD + '@ds042729.mlab.com:42729/botlog', {
-    poolSize: 50
-}, function(err, database) {
-    if (err) throw err;
-    db = database;
-});
+// MongoClient.connect('mongodb://admin:' + DB_PASSWORD + '@ds042729.mlab.com:42729/botlog', {
+//     poolSize: 50
+// }, function(err, database) {
+//     if (err) throw err;
+//     db = database;
+// });
 
 // =========================================================
 // Bot Setup
@@ -104,15 +104,15 @@ function messageHandler(session, builder, args) {
 }
 
 // log conversation into database
-function logConversation(context, time, input, reason, db) {
-    let newdoc = {
-        context: context,
-        time: time,
-        userinput: input,
-        reason: reason
-    };
-    console.log(newdoc);
-    db.collection("conversation_log").insert(newdoc, {
-        w: 1
-    });
-}
+// function logConversation(context, time, input, reason, db) {
+//     let newdoc = {
+//         context: context,
+//         time: time,
+//         userinput: input,
+//         reason: reason
+//     };
+//     console.log(newdoc);
+//     db.collection("conversation_log").insert(newdoc, {
+//         w: 1
+//     });
+// }

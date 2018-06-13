@@ -1,6 +1,6 @@
 var builder = require('botbuilder');
 var apiairecognizer = require('./apiairecognizer');
-const DIALOGFLOW_TOKEN = 'f989016e08864e8aa9940d5f58d36800'|| process.env.DIALOGFLOW_TOKEN;
+const DIALOGFLOW_TOKEN = process.env.DIALOGFLOW_TOKEN;
 
 var connector = new builder.ConsoleConnector().listen();
 

@@ -53,13 +53,18 @@ var intents = new builder.IntentDialog({
     recognizers: [recognizer]
 });
 
-// Add dialog intent name here:
+// Add dialogflow intent name in this list:
 const intentsList = [
     'Default Welcome Intent',
     'Default Fallback Intent',
     'Default Goodbye Intent',
+
+    // main menu
     'main-acct openclose',
     'main-billing',
+
+    // account open close matters:
+    // account opening; account closing; gas supply matters; security deposit
     'acct_openclose-opening account',
     'acct_openclose-opening account - commercial',
     'acct_openclose-opening account - residential',
@@ -67,7 +72,11 @@ const intentsList = [
     'acct_openclose-closing account - personal name',
     'acct_openclose-closing account - company name',
     'acct_openclose-gas supply matters',
-    'acct_openclose-gas supply matters-gas turn on'
+    'acct_openclose-gas supply matters-gas turn on',
+    'acct_openclose-gas supply matters-temp gas termination',
+    'acct_openclose-security deposit',
+    'acct_openclose-security deposit - residential SD',
+    'acct_openclose-security deposit - commercial SD'
 ];
 
 bot.dialog('/', intents);
@@ -80,7 +89,6 @@ intents.matchesAny(intentsList, function(session, args) {
 function messageHandler(session, builder, args) {
     let messages = args.entities[0].response.messages;
     messages.forEach((message) => {
-        // console.log(message.buttons);
         switch (message.type) {
             case 0: // text
                 session.send(message.speech);

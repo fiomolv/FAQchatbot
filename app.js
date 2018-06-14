@@ -117,7 +117,7 @@ function messageHandler(session, builder, args) {
                 session.endDialog();
                 break;
             case 2: // quick replies
-                builder.Prompts.choice(session, message.title, message.replies); // { listStyle: 3 }
+                builder.Prompts.choice(session, message.title, message.replies, { listStyle: 3 });
                 session.endDialog();
                 break;
         }

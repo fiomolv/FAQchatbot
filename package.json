@@ -13,6 +13,7 @@
   "author": "Xu Ruolan",
   "license": "ISC",
   "dependencies": {
+    "adaptivecards": "^1.0.0",
     "api-ai-recognizer": "^1.1.1",
     "apiai": "^4.0.3",
     "async": "^2.6.1",

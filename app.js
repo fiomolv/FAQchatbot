@@ -66,21 +66,30 @@ const intentsList = [
     // account open close matters:
     // account opening; account closing; gas supply matters; security deposit
     'acct_openclose-opening account',
+    'acct_openclose-closing account',
+    'acct_openclose-gas supply matters',
+    'acct_openclose-security deposit',
+
+];
+
+const intentsList_endDialog = [
     'acct_openclose-opening account - commercial',
     'acct_openclose-opening account - residential',
-    'acct_openclose-closing account',
     'acct_openclose-closing account - personal name',
     'acct_openclose-closing account - company name',
-    'acct_openclose-gas supply matters',
     'acct_openclose-gas supply matters-gas turn on',
     'acct_openclose-gas supply matters-temp gas termination',
-    'acct_openclose-security deposit',
     'acct_openclose-security deposit - residential SD',
     'acct_openclose-security deposit - commercial SD'
 ];
 
 bot.dialog('/', intents);
 intents.matchesAny(intentsList, function(session, args) {
+    // console.log(args);
+    messageHandler(session, builder, args);
+});
+
+intents.matchesAny(intentsList_endDialog, function(session, args) {
     // console.log(args);
     messageHandler(session, builder, args);
     postFeedback(session, builder);
@@ -137,6 +146,7 @@ function messageHandler(session, builder, args) {
 
 function postFeedback(session, builder) {
     var msg = new builder.Message(session)
+        .text('I hope my reply answers your enquiry.')
         .suggestedActions(
             builder.SuggestedActions.create(
                 session, [
@@ -144,7 +154,6 @@ function postFeedback(session, builder) {
                 ]
             ));
     session.send(msg);
-
 }
 
 

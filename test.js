@@ -41,6 +41,7 @@ bot.dialog('/', intents);
 intents.matchesAny(intentsList, function(session, args) {
     // console.log(args.entities[0].response.messages);
     messageHandler(session, builder, args);
+    postFeedback(session, builder);
 });
 
 // Handles DialogFlow intents messages
@@ -88,4 +89,16 @@ function messageHandler(session, builder, args) {
                 break;
         }
     })
+}
+
+function postFeedback(session, builder) {
+    var msg = new builder.Message(session)
+        .suggestedActions(
+            builder.SuggestedActions.create(
+                session, [
+                    builder.CardAction.postBack(session, "send_rate", "Rate me")
+                ]
+            ));
+    session.send(msg);
+
 }

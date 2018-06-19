@@ -39,7 +39,13 @@ var connector = new builder.ChatConnector({
     appId: MICROSOFT_APP_ID,
     appPassword: MICROSOFT_APP_PASSWORD
 });
-var bot = new builder.UniversalBot(connector);
+var bot = new builder.UniversalBot(connector, function (session) {
+    session.sendTyping();
+    setTimeout(function () {
+        session.send("Sorry I'm afriad that I couldn't help you this moment.");
+        session.send('You may want to contact our live agent during office hours via SP Utility app.');
+    }, 3000);
+});
 
 // If a Post request is made to /api/messages on port 3978 of our local server, then we pass it to the bot connector to handle
 server.post('/api/messages', connector.listen());
@@ -83,6 +89,7 @@ bot.dialog('/', intents);
 intents.matchesAny(intentsList, function(session, args) {
     // console.log(args);
     messageHandler(session, builder, args);
+    postFeedback(session, builder);
 });
 
 // Handles DialogFlow intents messages
@@ -130,6 +137,18 @@ function messageHandler(session, builder, args) {
                 break;
         }
     })
+}
+
+function postFeedback(session, builder) {
+    var msg = new builder.Message(session)
+        .suggestedActions(
+            builder.SuggestedActions.create(
+                session, [
+                    builder.CardAction.postBack(session, "send_rate", "Rate me")
+                ]
+            ));
+    session.send(msg);
+
 }
 
 

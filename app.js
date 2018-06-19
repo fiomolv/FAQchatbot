@@ -58,6 +58,7 @@ const intentsList = [
     'Default Welcome Intent',
     'Default Fallback Intent',
     'Default Goodbye Intent',
+    'Rate bot performane',
 
     // main menu
     'main-acct openclose',
@@ -68,8 +69,7 @@ const intentsList = [
     'acct_openclose-opening account',
     'acct_openclose-closing account',
     'acct_openclose-gas supply matters',
-    'acct_openclose-security deposit',
-
+    'acct_openclose-security deposit'
 ];
 
 const intentsList_endDialog = [

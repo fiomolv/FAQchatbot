@@ -150,7 +150,8 @@ function postFeedback(session, builder) {
         .suggestedActions(
             builder.SuggestedActions.create(
                 session, [
-                    builder.CardAction.postBack(session, "send_rate", "Rate me")
+                    builder.CardAction.postBack(session, "send_rate_like", "Rate me: nice"),
+                    builder.CardAction.postBack(session, "send_rate_dislike", "Rate me: bad")
                 ]
             ));
     session.send(msg);

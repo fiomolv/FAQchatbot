@@ -48,6 +48,7 @@ intents.matchesAny(intentsList, function(session, args) {
 function messageHandler(session, builder, args) {
     let messages = args.entities[0].response.messages;
     messages.forEach((message) => {
+        session.sendTyping();
         switch (message.type) {
             case 0: // text
                 session.send(message.speech);
